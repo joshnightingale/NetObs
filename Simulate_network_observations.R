@@ -74,26 +74,30 @@ movements <- read.csv("movements.csv") %>% as.matrix
 ### function to define network from movements
 obs_net <- function(Nsite, movements) {
   pb <- txtProgressBar(style=3)
-  og <- make_empty_graph(n=Nsite)
+  
+  edge_list <- vector("list", nrow(movements))
   
   # add each bird's sequential movements to net
   ik <- 1
   for(ik in 1:nrow(movements)){
     ee <- na.omit(movements[ik,][!duplicated(movements[ik,])])
-    il <- 1
-    for(il in 1:(length(ee)-1)) {
-      og <- add_edges(og, ee[il:(il+1)])
-    }
+    edge_list[[ik]] <- cbind(ee[1:(length(ee)-1)], ee[2:(length(ee))])
+   
     setTxtProgressBar(pb, ik/nrow(movements))
   } # close for(ik)
+  
+  edge_all <- do.call("rbind", edge_list)
+  og <- make_empty_graph(n=Nsite)
+  og <- add_edges(og, edge_all)
   
   return(og)
   close(pb)
 }
-# x <- obs_net(Nsite, movements[1:10,]) # test
+x <- obs_net(Nsite, movements[1:10,]) # test
 
 ### make true graph
-# tg <- obs_net(Nbird, Nsite, movements)
+# tg <- obs_net(Nsite, movements)
+saveRDS(tg, "true_graph.rds")
 tg <- readRDS("true_graph.rds") # load previous
 
 dtg <- degree(tg)
