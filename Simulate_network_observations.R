@@ -93,11 +93,11 @@ obs_net <- function(Nsite, movements) {
   return(og)
   close(pb)
 }
-x <- obs_net(Nsite, movements[1:10,]) # test
+# x <- obs_net(Nsite, movements[1:10,]) # test
 
 ### make true graph
 # tg <- obs_net(Nsite, movements)
-saveRDS(tg, "true_graph.rds")
+# saveRDS(tg, "true_graph.rds")
 tg <- readRDS("true_graph.rds") # load previous
 
 dtg <- degree(tg)
