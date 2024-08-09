@@ -1,0 +1,8 @@
+"Detection","N","True=10k","True=100k"
+"Perfect",10,17.18,
+"Perfect",100,52.04,
+"Perfect",323,71.78,
+"Perfect",1000,81.6,
+"Imperfect",100,36.76,
+"Imperfect",1000,62.52,
+"Imperfect",10000,65.74,
